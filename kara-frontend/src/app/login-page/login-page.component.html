@@ -1,0 +1,17 @@
+<div class="container-fluid h-100 bg-light" style="position:relative">
+  <div class="display-4 p-4 mb-12px text-center">Kara</div>
+  <div class="login-form-container">
+    <form [formGroup]="loginFormGroup">
+      <h4 class="form-group font-weight-light">Login</h4>
+      <div class="form-group">
+        <label for="emailField" class="text-muted">Email address</label>
+        <input type="email" id="emailField" class="form-control" formControlName="email">
+      </div>
+      <div class="form-group">
+        <label for="passwordField" class="text-muted">Password</label>
+        <input type="password" id="passwordField" class="form-control" formControlName="password">
+      </div>
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+  </div>
+</div>

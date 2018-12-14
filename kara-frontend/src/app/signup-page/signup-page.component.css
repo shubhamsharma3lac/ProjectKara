@@ -1,0 +1,13 @@
+.container-form{
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid #e8e9e9;
+    padding: 36px;
+    margin-bottom: 24px;
+}
+
+.form-control:focus{
+    border-color: hotpink;
+    box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.25) !important;
+}
