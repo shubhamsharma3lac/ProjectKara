@@ -16,4 +16,8 @@ export class AuthenticationService {
     }
     return this.http.post('http://localhost:3000/signup', data, options).toPromise();
   }
+
+  loginUserAsync(data: {}): Promise<any>{
+    return this.http.post('http://localhost:3000/login', data).toPromise();
+  }
 }

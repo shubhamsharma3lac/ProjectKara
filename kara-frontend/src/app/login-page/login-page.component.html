@@ -1,7 +1,7 @@
 <div class="container-fluid h-100 bg-light" style="position:relative">
   <div class="display-4 p-4 mb-12px text-center">Kara</div>
   <div class="login-form-container">
-    <form [formGroup]="loginFormGroup">
+    <form [formGroup]="loginFormGroup" (submit)="loginUser()">
       <h4 class="form-group font-weight-light">Login</h4>
       <div class="form-group">
         <label for="emailField" class="text-muted">Email address</label>
