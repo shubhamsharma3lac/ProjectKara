@@ -29,12 +29,14 @@ app.use(userRouter);
 // handle 404
 app.use(function(req, res, next){
     res.status(404).send('Not Found');
+    next();
 })
 
 // handle errors
 app.use(function(err, req, res, next){
     console.log(err);
     res.status(err.status || 500).send(err.message);
+    next();
 })
 
 app.listen(config.port, () => console.log(`server listening on ${config.port}`));

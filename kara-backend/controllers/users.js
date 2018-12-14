@@ -27,6 +27,9 @@ function loginUser(req, res, next) {
             return res.status(401).send('user not found');
         }
 
+        if(!user){
+            return next(new Error());
+        }
         var user = doc;
         bcrypt.compare(password, user.hash, function(err, result){
             if(err){
