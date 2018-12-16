@@ -39,4 +39,7 @@ app.use(function(err, req, res, next){
     next();
 })
 
-app.listen(config.port, () => console.log(`server listening on ${config.port}`));
+var server = app.listen(config.port, () => console.log(`server listening on ${config.port}`));
+module.exports = server;
+
+require('./controllers/sockets');

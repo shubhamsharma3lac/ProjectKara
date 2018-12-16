@@ -14,10 +14,10 @@ export class AuthenticationService {
         'Content-Type': 'application/json'
       }
     }
-    return this.http.post('http://localhost:3000/signup', data, options).toPromise();
+    return this.http.post('http://localhost:3000/user/register', data, options).toPromise();
   }
 
   loginUserAsync(data: {}): Promise<any>{
-    return this.http.post('http://localhost:3000/login', data).toPromise();
+    return this.http.post('http://localhost:3000/user/auth/token', data).toPromise();
   }
 }

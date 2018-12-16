@@ -21,20 +21,13 @@ var userSchema = new Schema({
     timeSpent: Number,
     birthday: Date,
     gender: String,
-    country: String
+    country: String,
+    token: String
 });
 
 userSchema.pre('save', function(callback){
     // TODO: hash password
-    bcrypt.hash(this.hash, 10, (err, hash) => {
-        if(err){
-            console.log(err);
-            throw new Error('error while hashing password');
-        }
-
-        this.hash = hash;
-        callback();
-    })
+    callback();
 })
 
 userSchema.methods.greet = function(){

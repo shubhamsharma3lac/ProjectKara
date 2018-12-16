@@ -14,7 +14,11 @@ import { LoginPageComponent } from './login-page/login-page.component';
 const routes: Route[] = 
 [
   {
-    path: '',
+    path: 'home',
+    component: HomePageComponent
+  },
+  {
+    path: 'register',
     component: SignupPageComponent
   },
   {

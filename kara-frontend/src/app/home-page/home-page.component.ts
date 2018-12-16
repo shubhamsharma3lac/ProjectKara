@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Message } from '../models/message';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-home-page',
@@ -7,7 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  public user: any;
+
+  constructor() { 
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.user.friendList = [];
+    // get chats
+    for(let i = 0; i < 10; i++){
+      var user = new User();
+      user.name = "Chloe Sullivan";
+      this.user.friendList.push(user);
+    }
+  }
 
   ngOnInit() {
   }
