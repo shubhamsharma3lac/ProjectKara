@@ -18,8 +18,8 @@ io.sockets.on('connection', function (client) {
     client.on('send:message:client', (data) => {
         //TODO: save message to database
         var message = new Message();
-        Object.keys(data).forEach((key) => {
-            message[key] = data[key];
+        Object.keys(data.message).forEach((key) => {
+            message[key] = data.message[key];
         })
 
         message.save(function (err, result) {
@@ -27,13 +27,25 @@ io.sockets.on('connection', function (client) {
                 return console.log(err);
             }
 
-            client.broadcast.emit('send:message:server', { message: data });
+            io.to(data.socketId).emit('send:message:server', { message: data.message });
         })
     })
 
     client.on('fetch:messages:client', async function (data) {
         var messages = await Message.find({ $or: [{ fromUserId: data._id }, { toUserId: data._id }] }).exec();
         client.emit('fetch:messages:server', { messages: messages });
+    })
+
+    client.on('update:user:socketId:client', function (data) {
+        var userId = data.userId;
+        User.findById(userId, function (err, result1) {
+            result1.socketId = client.id;
+            result1.save(function (err, result2) {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        })
     })
 });
 

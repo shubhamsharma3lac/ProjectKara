@@ -23,6 +23,24 @@ export class MessageDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.socket = io('http://localhost:3000/');
+    this.socket.on('connect', () => {
+      //TODO: update user with socket id
+      this.activeUser.socketId = this.socket.id;
+      this.socket.emit('update:user:socketId:client', { userId: this.activeUser._id });
+      console.log(this.socket.id);
+    });
+
+    this.socket.on('reconnect', () => {
+      //TODO: update user with socket id
+      this.activeUser.socketId = this.socket.id;
+      this.socket.emit('update:user:socketId:client', { userId: this.activeUser._id });
+      console.log(this.socket.id);
+    })
+
+    this.socket.on('disconnect', () => {
+      console.log(this.socket.id);
+    })
+
     this.socket.on('send:message:server', (data) => {
       this.activeUser.hubList.forEach(hub => {
         this.updateMessages(hub, data.message);
@@ -41,7 +59,7 @@ export class MessageDetailsComponent implements OnInit {
     let dateReaded = new Date();
 
     var message = new Message(fromUserId, toUserId, content, dateSent, dateRecieved, dateReaded);
-    this.socket.emit('send:message:client', message);
+    this.socket.emit('send:message:client', { message: message, socketId: this.activeChatHub.socketId });
 
     this.updateMessages(this.activeChatHub, message);
   }

@@ -22,7 +22,8 @@ var userSchema = new Schema({
     birthday: Date,
     gender: String,
     country: String,
-    token: String
+    token: String,
+    socketId: String
 });
 
 userSchema.pre('save', function(callback){
