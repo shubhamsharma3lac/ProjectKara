@@ -15,20 +15,22 @@ export class MessageDetailsComponent implements OnInit {
   public msgForm: FormGroup;
   public formControls = {};
   public socket: SocketIOClient.Socket;
-  
-  constructor() { 
+
+  constructor() {
     this.formControls['msgField'] = new FormControl('');
     this.msgForm = new FormGroup(this.formControls);
   }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.socket = io('http://localhost:3000/');
     this.socket.on('send:message:server', (data) => {
-      this.updateMessages(data.message);
+      this.activeUser.hubList.forEach(hub => {
+        this.updateMessages(hub, data.message);
+      });
     })
   }
 
-  sendMessage(){
+  sendMessage() {
     var msgText = this.msgForm.value['msgField'];
 
     let fromUserId = this.activeUser._id;
@@ -41,22 +43,21 @@ export class MessageDetailsComponent implements OnInit {
     var message = new Message(fromUserId, toUserId, content, dateSent, dateRecieved, dateReaded);
     this.socket.emit('send:message:client', message);
 
-    this.updateMessages(message);
+    this.updateMessages(this.activeChatHub, message);
   }
 
-  updateMessages(message: any){
-    if(!this.activeChatHub.messages){
-      this.activeChatHub.messages = [];
+  updateMessages(hub: any, message: any) {
+    if (!hub.messages) {
+      hub.messages = [];
     }
 
-    if(message.toUserId === this.activeUser._id && message.fromUserId === this.activeChatHub._id){
+    if (message.toUserId === this.activeUser._id && message.fromUserId === hub._id) {
       message.isSent = false;
-      this.activeChatHub.messages.push(message);
+      hub.messages.push(message);
     }
-    else if(message.fromUserId === this.activeUser._id)
-    {
+    else if (message.fromUserId === this.activeUser._id) {
       message.isSent = true;
-      this.activeChatHub.messages.push(message);
+      hub.messages.push(message);
     }
   }
 }
