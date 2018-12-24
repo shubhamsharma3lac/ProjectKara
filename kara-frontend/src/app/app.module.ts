@@ -10,6 +10,9 @@ import { Route, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginPageComponent } from './login-page/login-page.component';
+import * as $ from 'jquery';
+import { MessageListComponent } from './message-list/message-list.component';
+import { MessageDetailsComponent } from './message-details/message-details.component';
 
 const routes: Route[] = 
 [
@@ -32,7 +35,9 @@ const routes: Route[] =
     AppComponent,
     HomePageComponent,
     SignupPageComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    MessageListComponent,
+    MessageDetailsComponent
   ],
   imports: [
     BrowserModule,

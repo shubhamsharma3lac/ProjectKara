@@ -1,0 +1,30 @@
+<div class="container-fluid no-padding h-100">
+  <div class="content-root" *ngIf="activeChatHub">
+    <div class="header-root">
+      <div class="header-content">
+        <div class="avatar"></div>
+        <strong>{{activeChatHub.firstName}} {{activeChatHub.lastName}}</strong>
+      </div>
+    </div>
+    <div class="messages-root">
+      <ul class="messages-list">
+        <li *ngFor="let message of activeChatHub.messages; index as i" >
+          <div>
+            <strong>{{message.content}}</strong>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="action-root">
+      <form [formGroup]="msgForm" (ngSubmit)="sendMessage()">
+        <div class="form-group">
+          <input type="text" placeholder="type here..." class="form-control text-field" formControlName="msgField">
+          <button type="submit" class="btn">></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="no-content-root"  *ngIf="!activeChatHub">
+    <p>Start chatting...</p>
+  </div>
+</div>

@@ -10,19 +10,17 @@ import { User } from '../models/user';
 export class HomePageComponent implements OnInit {
 
   public user: any;
+  public activeChatUser: any;
 
   constructor() { 
     this.user = JSON.parse(localStorage.getItem('user'));
-    this.user.friendList = [];
-    // get chats
-    for(let i = 0; i < 10; i++){
-      var user = new User();
-      user.name = "Chloe Sullivan";
-      this.user.friendList.push(user);
-    }
   }
 
   ngOnInit() {
+  }
+
+  switchMessage(user: any){
+    this.activeChatUser = user;
   }
 
 }

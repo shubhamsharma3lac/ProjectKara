@@ -1,32 +1,4 @@
-.chats-pane{
-    padding: 0;
-}
-
-.user-list-item{
-    padding: 15px 0;
-}
-
-.user-list-item-content{
-    display: flex;
-    flex-direction: row;
-}
-
-.user-list-item-info{
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    margin-left: 1rem;
-    justify-content: center;
-}
-
-.list-group{
-    list-style: none;
-}
-
-.user-avatar{
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: antiquewhite;
-    background-size: cover;  
+.container-fluid{
+    height: 100%;
+    overflow: auto;
 }

@@ -1,6 +1,5 @@
 export class Message{
     constructor(
-        public id: string, 
         public fromUserId: string, 
         public toUserId: string,
         public content: string,

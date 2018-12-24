@@ -1,22 +1,6 @@
-<div class="container-fluid h-100">
-  <div class="chats-pane col-sm-3 col-md-3 h-100 bg-light" style="overflow:auto">
-    <div>
-      <div class="col-12 text-center">{{user.firstName}}</div>
-    </div>
-    <!--Chats pane-->
-    <ul class="list-group">
-      <li class="user-list-item list-group-item-flush" *ngFor="let user of user.friendList">
-        <div class="user-list-item-content">
-          <div class="user-avatar" style="background-image: url(../../assets/207504_v9_bb.jpg)"></div>
-          <div class="user-list-item-info">
-            <div style="display:flex">
-              <strong style="display:block; flex-grow: 1">{{user.name}}</strong>
-              <span class="badge badge-primary badge-pill">24</span>
-            </div>
-            <small class="text-muted">Here goes the message...</small>
-          </div>
-        </div>
-      </li>
-    </ul>
+<div class="container-fluid">
+  <div class="row h-100" style="overflow: auto">
+    <app-message-list [activeUser]="user" (messageChanged)="switchMessage($event)" class="col-md-4 h-100 px-0"></app-message-list>
+    <app-message-details [activeUser]="user" [activeChatHub]="activeChatUser" class="col-md-8 h-100 px-0"></app-message-details>
   </div>
 </div>
