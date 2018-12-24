@@ -72,6 +72,10 @@ form{
 
 .messages-list{
     list-style: none;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .no-content-root{
@@ -79,4 +83,12 @@ form{
     height: 100%;
     align-items: center;
     justify-content: center;
+}
+
+.message-list-item-content{
+    padding: 8px;
+    margin-bottom: 8px;
+    color: black;
+    background: wheat;
+    border-radius: 10px;
 }

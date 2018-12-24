@@ -18,14 +18,23 @@ export class MessageListComponent implements OnInit {
 
   ngOnInit() {
     var socket = io('http://localhost:3000/');
-    socket.emit('fetch:users:client');
+    socket.emit('fetch:users:client', this.activeUser);
 
     socket.on('fetch:users:server', (data) => {
-      this.activeUser.friendList = data.users;
+      this.activeUser.hubList = data.users;
+    })
+
+    socket.emit('fetch:messages:client', this.activeUser);
+    socket.on('fetch:messages:server', (data) => {
+      this.activeUser.hubList.forEach(hub => {
+        data.messages.forEach(msg => {
+          this.updateMessages(hub, msg);
+        });
+      });
     })
   }
 
-  onMessageListItemChanged($event: any, user: any){
+  onHubChanged($event: any, user: any){
     $('.list-messages').children().each(function(){
       $(this).removeClass('list-item-active');
     })
@@ -33,6 +42,22 @@ export class MessageListComponent implements OnInit {
     $($event.currentTarget).addClass('list-item-active');
 
     this.messageChanged.emit(user);
+  }
+
+  updateMessages(hub: any, message: any){
+    if(!hub.messages){
+      hub.messages = [];
+    }
+
+    if(message.toUserId === this.activeUser._id && message.fromUserId === hub._id){
+      message.isSent = false;
+      hub.messages.push(message);
+    }
+    else if(message.fromUserId === this.activeUser._id)
+    {
+      message.isSent = true;
+      hub.messages.push(message);
+    }
   }
 
 }

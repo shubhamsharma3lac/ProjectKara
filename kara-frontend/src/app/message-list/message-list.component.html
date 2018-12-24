@@ -1,8 +1,13 @@
 <div class="container-fluid" style="overflow:auto">
-  <div class="header" style="color:hotpink">{{activeUser.firstName}} {{activeUser.lastName}}</div>
+  <div class="header">
+    <div class="header-content">
+      <div class="avatar avatar-small"></div>
+      <small> {{activeUser.firstName}}</small>
+    </div>
+  </div>
   <div class="chats-container">
     <ul class="list-messages">
-      <li class="list-item-container" *ngFor="let user of activeUser.friendList; index as i" (click)="onMessageListItemChanged($event, user)">
+      <li class="list-item-container" *ngFor="let user of activeUser.hubList; index as i" (click)="onHubChanged($event, user)">
         <div class="list-item">
           <div class="list-item-avatar"></div>
           <div class="list-item-info">

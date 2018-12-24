@@ -78,3 +78,31 @@
 .list-item-active{
     background-color: rgba(0, 0, 0, 0.2);
 }
+
+.header{
+    display: flex;
+    flex-direction: row;
+    padding: 4px;
+    justify-content: flex-start;
+    align-items: center;
+    color: black;
+    box-shadow: 0px 2px 10px black;
+    background-color: white;
+}
+
+.header-content{
+    display: flex;
+    flex-direction: row;
+    padding: 4px;
+    align-items: center;
+}
+
+.avatar-small{
+    width: 32px;
+    height: 32px;
+    margin-right: 4px; 
+    border-radius: 50%;
+    background-color: lightgray;
+    background-image: url(../../assets/318090_v9_ba.jpg);
+    background-size: cover;
+}

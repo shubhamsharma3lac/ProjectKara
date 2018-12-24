@@ -24,7 +24,7 @@ export class MessageDetailsComponent implements OnInit {
   ngOnInit() {    
     this.socket = io('http://localhost:3000/');
     this.socket.on('send:message:server', (data) => {
-      this.addMessageToList(data.message);
+      this.updateMessages(data.message);
     })
   }
 
@@ -41,19 +41,21 @@ export class MessageDetailsComponent implements OnInit {
     var message = new Message(fromUserId, toUserId, content, dateSent, dateRecieved, dateReaded);
     this.socket.emit('send:message:client', message);
 
-    this.addMessageToList(message);
+    this.updateMessages(message);
   }
 
-  addMessageToList(message: any){
+  updateMessages(message: any){
     if(!this.activeChatHub.messages){
       this.activeChatHub.messages = [];
     }
 
     if(message.toUserId === this.activeUser._id && message.fromUserId === this.activeChatHub._id){
+      message.isSent = false;
       this.activeChatHub.messages.push(message);
     }
     else if(message.fromUserId === this.activeUser._id)
     {
+      message.isSent = true;
       this.activeChatHub.messages.push(message);
     }
   }
