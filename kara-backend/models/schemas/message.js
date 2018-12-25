@@ -6,8 +6,8 @@ var messageSchema = new Schema({
     fromUserId: { type: String, required: true },
     content: { type: String, required: true },
     dateSent: { type: Date, required: true, default: Date.now() },
-    dateRecieved: { type: Date, required: true },
-    dateReaded: { type: Date, required: true }
+    dateRecieved: { type: Date },
+    dateReaded: { type: Date }
 })
 
 var Message = mongoose.model('Message', messageSchema);

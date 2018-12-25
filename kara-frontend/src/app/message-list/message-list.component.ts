@@ -57,6 +57,15 @@ export class MessageListComponent implements OnInit {
     const hubId = hub.id;
 
     if (message.toUserId === userId && message.fromUserId === hubId) {
+      //TODO: Add daterecieved to message
+      if (!message.dateRecieved) {
+        message.dateRecieved = new Date();
+      }
+
+      if (!message.dateReaded) {
+        hub.unreadMessageCount++;
+      }
+
       hub.messages.push(message);
     }
     else if (message.fromUserId === userId && message.toUserId == hubId) {
@@ -85,5 +94,9 @@ export class MessageListComponent implements OnInit {
     $(event.currentTarget).addClass('list-item-active');
 
     this.chatHubChanged.emit(hub);
+
+    // TODO: set unreadMessageCount to 0
+    // TODO: to be implemented properly
+    hub.unreadMessageCount = 0;
   }
 }

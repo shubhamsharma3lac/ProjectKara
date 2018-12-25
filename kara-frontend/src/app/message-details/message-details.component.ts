@@ -11,7 +11,7 @@ import { User } from '../models/user';
 })
 export class MessageDetailsComponent implements OnInit {
   @Input() socket: SocketIOClient.Socket;
-  @Input() activeUser : User;
+  @Input() activeUser: User;
   @Input() activeChatHub: ChatHub;
 
   public msgFormGroup: FormGroup;
@@ -25,7 +25,7 @@ export class MessageDetailsComponent implements OnInit {
   ngOnInit() {
     this.socket.on('send:message:server', (data) => {
       this.activeUser.hubList.forEach(hub => {
-        this.updateHubsWithMessages(hub, data.message);
+        this.updateHubsWithMessages(hub, Message.from(data.message));
       });
     })
   }
@@ -38,8 +38,6 @@ export class MessageDetailsComponent implements OnInit {
     message.toUserId = this.activeChatHub.id;
     message.content = content;
     message.dateSent = new Date();
-    message.dateRecieved = new Date();
-    message.dateReaded = new Date();
 
     this.socket.emit('send:message:client', { message: message, socketId: this.activeChatHub.socketId });
 
@@ -51,7 +49,14 @@ export class MessageDetailsComponent implements OnInit {
     const hubId = hub.id;
 
     if (message.toUserId === userId && message.fromUserId === hubId) {
+      //TODO: Add daterecieved to message
+      message.dateRecieved = new Date();
+      //TODO: update dateRecieved in database
       hub.messages.push(message);
+
+      if (!message.dateReaded) {
+        hub.unreadMessageCount++;
+      }
     }
     else if (message.fromUserId === userId && message.toUserId == hubId) {
       hub.messages.push(message);

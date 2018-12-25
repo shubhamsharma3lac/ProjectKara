@@ -6,6 +6,7 @@ export class Message{
     public dateSent: Date;
     public dateRecieved: Date;
     public dateReaded: Date;
+    public styles: any;
 
     constructor(){
     }

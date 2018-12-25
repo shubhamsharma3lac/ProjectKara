@@ -13,11 +13,11 @@
           <div class="list-item-info">
             <div class="list-item-info-header">
               <strong class="message-user-name">{{hub.name}}</strong>
-              <span class="message-unread-count badge badge-pill">10</span>
+              <span class="message-badge" *ngIf="hub.unreadMessageCount !== 0">{{hub.unreadMessageCount}}</span>
             </div>
             <div class="list-item-info-message">
-              <small class="message-text">{{hub.messages[0]}}</small>
-              <small class="message-date">7:43 PM</small>
+              <small class="message-text" [ngStyle]="hub.messages[hub.messages.length - 1]?.styles?.textStyle">{{hub.messages[hub.messages.length - 1]?.content}}</small>
+              <small class="message-date">{{hub.messages[hub.messages.length - 1]?.dateRecieved | date: 'shortTime'}}</small>
             </div>
           </div>
         </div>

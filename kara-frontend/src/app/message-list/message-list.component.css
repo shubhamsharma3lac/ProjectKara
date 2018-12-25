@@ -35,6 +35,7 @@
 
 .list-item-info-header{
     display: flex;
+    align-items: center;
 }
 
 .message-user-name{
@@ -42,9 +43,17 @@
     flex-grow: 1;
 }
 
-.message-unread-count{
-    flex-grow: 0;
-    background: antiquewhite;
+.message-badge{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    background: wheat;
+    padding: 4px;
+    border-radius: 100%;
+    font-size: 65%;
+    width: 20px;
+    height: 20px;
 }
 
 .list-item-info-message{
@@ -107,4 +116,8 @@
     background-color: lightgray;
     background-image: url(../../assets/318090_v9_ba.jpg);
     background-size: cover;
+}
+
+.message-unreaded{
+    color: crimson;
 }

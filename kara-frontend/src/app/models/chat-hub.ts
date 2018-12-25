@@ -6,6 +6,11 @@ export class ChatHub {
     public status: string;
     public messages: Message[]
     public socketId: string;
+    
+    // ***********************************
+    // Application specific properties
+    // ***********************************
+    public unreadMessageCount: number = 0;
 
     constructor() {
     }
