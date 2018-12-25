@@ -1,12 +1,13 @@
 .container-fluid{
     height: 100%;
-    overflow: auto;
-    background-color: whitesmoke;
+    background-color: #fff;
     padding: 0;
+    border-right: 1px solid whitesmoke;
 }
 
 .list-messages{
     list-style: none;
+    list-style-type: none;
     padding: 0;
 }
 
@@ -87,9 +88,8 @@
     padding: 0 8px;
     align-items: center;
     justify-content: flex-start;
-    background: white;
+    background: whitesmoke;
     color: black;
-    box-shadow: 0px 2px 10px black;
 }
 
 .header-content{

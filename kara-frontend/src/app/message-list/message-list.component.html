@@ -1,10 +1,10 @@
-<div class="container-fluid" style="overflow:auto">
-  <div class="header">
+<div class="container-fluid">
+  <header class="header">
     <div class="header-content">
       <div class="avatar avatar-small"></div>
       <small> {{activeUser.firstName}}</small>
     </div>
-  </div>
+  </header>
   <div class="chats-container">
     <ul class="list-messages">
       <li class="list-item-container" *ngFor="let user of activeUser.hubList; index as i" (click)="onHubChanged($event, user)">
