@@ -22,18 +22,22 @@ export class MessageListComponent implements OnInit {
   }
 
   getUsersAndMessages() {
-    // Get all the users from server
-    this.socket.emit('fetch:users:client', { id: this.activeUser._id });
+    const userId = this.activeUser._id;
 
+    // Emit the event to socket to fetch all the chat hubs of the current user
+    this.socket.emit('fetch:users:client', { id: userId });
+
+    // Event Response to fetch:user:client from server
     this.socket.on('fetch:users:server', (data) => {
       this.activeUser.hubList = data.users;
 
       this.listenToUserUpdates();
 
-      // Get all the messages
-      this.socket.emit('fetch:messages:client', { id: this.activeUser._id });
+      // Emit the event to socket to fetch all the messages of the current user
+      this.socket.emit('fetch:messages:client', { id: userId });
     })
 
+    // Event Response to fetch:messages:client from server
     this.socket.on('fetch:messages:server', (data) => {
       this.activeUser.hubList.forEach(hub => {
         data.messages.forEach(msg => {

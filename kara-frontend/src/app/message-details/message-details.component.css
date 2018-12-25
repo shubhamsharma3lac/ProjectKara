@@ -69,13 +69,12 @@ form{
 .messages-root{
     flex: 1;
     overflow: auto;
-    margin-top: 1rem;
 }
 
 .messages-list{
     list-style: none;
     list-style-type: none;
-    padding: 16px;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     width: 100%;
