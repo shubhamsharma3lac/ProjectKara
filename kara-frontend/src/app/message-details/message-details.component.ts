@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Message } from '../models/message';
+import { ChatHub } from '../models/chat-hub';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-message-details',
@@ -9,8 +11,8 @@ import { Message } from '../models/message';
 })
 export class MessageDetailsComponent implements OnInit {
   @Input() socket: SocketIOClient.Socket;
-  @Input() activeUser;
-  @Input() activeChatHub;
+  @Input() activeUser : User;
+  @Input() activeChatHub: ChatHub;
 
   public msgFormGroup: FormGroup;
 
@@ -23,38 +25,35 @@ export class MessageDetailsComponent implements OnInit {
   ngOnInit() {
     this.socket.on('send:message:server', (data) => {
       this.activeUser.hubList.forEach(hub => {
-        this.updateMessages(hub, data.message);
+        this.updateHubsWithMessages(hub, data.message);
       });
     })
   }
 
   sendMessage() {
-    var msgText = this.msgFormGroup.value['msgField'];
+    let content = this.msgFormGroup.value['msgField'];
 
-    let fromUserId = this.activeUser._id;
-    let toUserId = this.activeChatHub._id;
-    let content = msgText;
-    let dateSent = new Date();
-    let dateRecieved = new Date();
-    let dateReaded = new Date();
+    let message = new Message();
+    message.fromUserId = this.activeUser.id;
+    message.toUserId = this.activeChatHub.id;
+    message.content = content;
+    message.dateSent = new Date();
+    message.dateRecieved = new Date();
+    message.dateReaded = new Date();
 
-    var message = new Message(fromUserId, toUserId, content, dateSent, dateRecieved, dateReaded);
     this.socket.emit('send:message:client', { message: message, socketId: this.activeChatHub.socketId });
 
-    this.updateMessages(this.activeChatHub, message);
+    this.updateHubsWithMessages(this.activeChatHub, message);
   }
 
-  updateMessages(hub: any, message: any) {
-    if (!hub.messages) {
-      hub.messages = [];
-    }
+  updateHubsWithMessages(hub: ChatHub, message: Message) {
+    const userId = this.activeUser.id;
+    const hubId = hub.id;
 
-    if (message.toUserId === this.activeUser._id && message.fromUserId === hub._id) {
-      message.isSent = false;
+    if (message.toUserId === userId && message.fromUserId === hubId) {
       hub.messages.push(message);
     }
-    else if (message.fromUserId === this.activeUser._id && message.toUserId == hub._id) {
-      message.isSent = true;
+    else if (message.fromUserId === userId && message.toUserId == hubId) {
       hub.messages.push(message);
     }
   }

@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import * as io from 'socket.io-client';
 import { User } from '../models/user';
 import { EventEmitter } from '@angular/core';
+import { ChatHub } from '../models/chat-hub';
+import { Message } from '../models/message';
 
 @Component({
   selector: 'app-message-list',
@@ -10,28 +12,31 @@ import { EventEmitter } from '@angular/core';
 })
 export class MessageListComponent implements OnInit {
   @Input() socket: SocketIOClient.Socket;
-  @Input() activeUser;
-  @Output() chatHubChanged: EventEmitter<any>;
+  @Input() activeUser: User;
+  @Output() chatHubChanged: EventEmitter<ChatHub>;
 
   constructor() {
     this.chatHubChanged = new EventEmitter();
   }
 
   ngOnInit() {
-    this.getUsersAndMessages();
+    this.getChatHubs();
   }
 
-  getUsersAndMessages() {
-    const userId = this.activeUser._id;
+  getChatHubs() {
+    const userId = this.activeUser.id;
 
     // Emit the event to socket to fetch all the chat hubs of the current user
     this.socket.emit('fetch:users:client', { id: userId });
 
     // Event Response to fetch:user:client from server
     this.socket.on('fetch:users:server', (data) => {
-      this.activeUser.hubList = data.users;
+      //TODO: Map users or groups to 'ChatHub'
+      data.users.forEach(user => {
+        this.activeUser.hubList.push(ChatHub.from(user));
+      });
 
-      this.listenToUserUpdates();
+      this.listenToChatHubUpdates();
 
       // Emit the event to socket to fetch all the messages of the current user
       this.socket.emit('fetch:messages:client', { id: userId });
@@ -41,51 +46,44 @@ export class MessageListComponent implements OnInit {
     this.socket.on('fetch:messages:server', (data) => {
       this.activeUser.hubList.forEach(hub => {
         data.messages.forEach(msg => {
-          this.updateMessages(hub, msg);
+          this.updateHubsWithMessages(hub, msg);
         });
       });
     })
   }
 
-  onHubChanged($event: any, user: any) {
-    $('.list-messages').children().each(function () {
-      $(this).removeClass('list-item-active');
-    })
+  updateHubsWithMessages(hub: ChatHub, message: Message) {
+    const userId = this.activeUser.id;
+    const hubId = hub.id;
 
-    $($event.currentTarget).addClass('list-item-active');
-
-    this.chatHubChanged.emit(user);
-  }
-
-  updateMessages(hub: any, message: any) {
-    if (!hub.messages) {
-      hub.messages = [];
-    }
-
-    if (message.toUserId === this.activeUser._id && message.fromUserId === hub._id) {
-      message.isSent = false;
+    if (message.toUserId === userId && message.fromUserId === hubId) {
       hub.messages.push(message);
     }
-    else if (message.fromUserId === this.activeUser._id && message.toUserId == hub._id) {
-      message.isSent = true;
+    else if (message.fromUserId === userId && message.toUserId == hubId) {
       hub.messages.push(message);
     }
   }
 
-  listenToUserUpdates() {
+  listenToChatHubUpdates() {
     this.socket.on('update:user:socketId:server', (data) => {
       let userId = data.id;
       let socketId = data.socketId;
 
-      if (!this.activeUser.hubList) {
-        this.activeUser.hubList = [];
-      }
-
       this.activeUser.hubList.forEach(hub => {
-        if (hub._id === userId) {
+        if (hub.id === userId) {
           hub.socketId = socketId;
         }
       });
     })
+  }
+
+  onChatHubChanged($event: any, hub: ChatHub) {
+    $('.list-messages').children().each(function () {
+      $(this).removeClass('list-item-active');
+    })
+
+    $(event.currentTarget).addClass('list-item-active');
+
+    this.chatHubChanged.emit(hub);
   }
 }

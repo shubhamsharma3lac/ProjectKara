@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Message } from '../models/message';
 import { User } from '../models/user';
 import * as io from 'socket.io-client';
+import { ChatHub } from '../models/chat-hub';
 
 @Component({
   selector: 'app-home-page',
@@ -10,11 +11,11 @@ import * as io from 'socket.io-client';
 })
 export class HomePageComponent implements OnInit {
   public socket: SocketIOClient.Socket;
-  public activeUser: any;
-  public activeChatHub: any;
+  public activeUser: User;
+  public activeChatHub: ChatHub;
 
   constructor() { 
-    this.activeUser = JSON.parse(localStorage.getItem('user'));
+    this.activeUser = User.from(JSON.parse(localStorage.getItem('user')));
   }
 
   ngOnInit() {
@@ -22,18 +23,20 @@ export class HomePageComponent implements OnInit {
   }
 
   initializeSocket(){
+    var userId = this.activeUser.id;
+
     this.socket = io('http://localhost:3000/');
     this.socket.on('connect', () => {
       //TODO: update user with socket id
       this.activeUser.socketId = this.socket.id;
-      this.socket.emit('update:user:socketId:client', { userId: this.activeUser._id });
+      this.socket.emit('update:user:socketId:client', { userId: userId });
       console.log(this.socket.id);
     });
 
     this.socket.on('reconnect', () => {
       //TODO: update user with socket id
       this.activeUser.socketId = this.socket.id;
-      this.socket.emit('update:user:socketId:client', { userId: this.activeUser._id });
+      this.socket.emit('update:user:socketId:client', { userId: userId });
       console.log(this.socket.id);
     })
 
@@ -42,7 +45,7 @@ export class HomePageComponent implements OnInit {
     })
   }
 
-  chatHubChanged(hub: any){
+  chatHubChanged(hub: ChatHub){
     this.activeChatHub = hub;
   }
 }

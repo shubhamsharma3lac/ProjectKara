@@ -3,12 +3,12 @@
     <header class="header-root">
       <div class="header-content">
         <div class="avatar"></div>
-        <strong>{{activeChatHub.firstName}} {{activeChatHub.lastName}}</strong>
+        <strong>{{activeChatHub.name}}</strong>
       </div>
     </header>
     <div class="messages-root">
       <ul class="messages-list">
-        <app-message-item [message]="message" *ngFor="let message of activeChatHub.messages; index as i" [ngStyle]="{'align-self': message.isSent ? 'flex-start' : 'flex-end'}"></app-message-item>
+        <app-message-item [message]="message" *ngFor="let message of activeChatHub.messages; index as i" [ngStyle]="{'align-self': message.fromUserId === activeUser.id ? 'flex-start' : 'flex-end'}"></app-message-item>
       </ul>
     </div>
     <div class="action-root">

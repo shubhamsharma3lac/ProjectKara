@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="row h-100" style="overflow: auto">
+  <div class="row h-100">
     <app-message-list [socket]="socket" [activeUser]="activeUser" (chatHubChanged)="chatHubChanged($event)" class="col-md-4 h-100 px-0"></app-message-list>
     <app-message-details [socket]="socket" [activeUser]="activeUser" [activeChatHub]="activeChatHub" class="col-md-8 h-100 px-0"></app-message-details>
   </div>
