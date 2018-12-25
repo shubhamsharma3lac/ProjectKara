@@ -16,7 +16,7 @@
       </ul>
     </div>
     <div class="action-root">
-      <form [formGroup]="msgForm" (ngSubmit)="sendMessage()">
+      <form [formGroup]="msgFormGroup" (ngSubmit)="sendMessage()">
         <div class="form-group">
           <input type="text" placeholder="type here..." class="form-control text-field" formControlName="msgField">
           <button type="submit" class="btn">></button>

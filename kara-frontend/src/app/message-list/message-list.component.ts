@@ -9,23 +9,30 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./message-list.component.css']
 })
 export class MessageListComponent implements OnInit {
-
+  @Input() socket: SocketIOClient.Socket;
   @Input() activeUser;
-  @Output() messageChanged = new EventEmitter();
+  @Output() chatHubChanged: EventEmitter<any>;
 
   constructor() {
-   }
+    this.chatHubChanged = new EventEmitter();
+  }
 
   ngOnInit() {
-    var socket = io('http://localhost:3000/');
-    socket.emit('fetch:users:client', this.activeUser);
+    this.getUsersAndMessages();
+  }
 
-    socket.on('fetch:users:server', (data) => {
+  getUsersAndMessages() {
+    // Get all the users from server
+    this.socket.emit('fetch:users:client', { id: this.activeUser._id });
+
+    this.socket.on('fetch:users:server', (data) => {
       this.activeUser.hubList = data.users;
+
+      // Get all the messages
+      this.socket.emit('fetch:messages:client', { id: this.activeUser._id });
     })
 
-    socket.emit('fetch:messages:client', this.activeUser);
-    socket.on('fetch:messages:server', (data) => {
+    this.socket.on('fetch:messages:server', (data) => {
       this.activeUser.hubList.forEach(hub => {
         data.messages.forEach(msg => {
           this.updateMessages(hub, msg);
@@ -34,30 +41,28 @@ export class MessageListComponent implements OnInit {
     })
   }
 
-  onHubChanged($event: any, user: any){
-    $('.list-messages').children().each(function(){
+  onHubChanged($event: any, user: any) {
+    $('.list-messages').children().each(function () {
       $(this).removeClass('list-item-active');
     })
 
     $($event.currentTarget).addClass('list-item-active');
 
-    this.messageChanged.emit(user);
+    this.chatHubChanged.emit(user);
   }
 
-  updateMessages(hub: any, message: any){
-    if(!hub.messages){
+  updateMessages(hub: any, message: any) {
+    if (!hub.messages) {
       hub.messages = [];
     }
 
-    if(message.toUserId === this.activeUser._id && message.fromUserId === hub._id){
+    if (message.toUserId === this.activeUser._id && message.fromUserId === hub._id) {
       message.isSent = false;
       hub.messages.push(message);
     }
-    else if(message.fromUserId === this.activeUser._id)
-    {
+    else if (message.fromUserId === this.activeUser._id) {
       message.isSent = true;
       hub.messages.push(message);
     }
   }
-
 }

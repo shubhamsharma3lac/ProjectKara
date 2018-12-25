@@ -11,7 +11,8 @@ io.sockets.on('connection', function (client) {
     })
 
     client.on('fetch:users:client', async function (data) {
-        var users = await getUsersAsync(data._id);
+        var userId = data.id;
+        var users = await getUsersAsync(userId);
         client.emit('fetch:users:server', { users: users })
     })
 
@@ -32,18 +33,20 @@ io.sockets.on('connection', function (client) {
     })
 
     client.on('fetch:messages:client', async function (data) {
-        var messages = await Message.find({ $or: [{ fromUserId: data._id }, { toUserId: data._id }] }).exec();
+        var messages = await Message.find({ $or: [{ fromUserId: data.id }, { toUserId: data.id }] }).exec();
         client.emit('fetch:messages:server', { messages: messages });
     })
 
     client.on('update:user:socketId:client', function (data) {
         var userId = data.userId;
-        User.findById(userId, function (err, result1) {
-            result1.socketId = client.id;
-            result1.save(function (err, result2) {
+        User.findById(userId, function (err, user) {
+            user.socketId = client.id;
+            user.save(function (err, modified_user) {
                 if (err) {
                     console.log(err);
                 }
+
+                client.broadcast.emit('update:user:socketId:server', { id: modified_user._id,  socketId: modified_user.socketId });
             })
         })
     })
