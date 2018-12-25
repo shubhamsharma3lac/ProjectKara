@@ -21,6 +21,26 @@ export class MessageListComponent implements OnInit {
 
   ngOnInit() {
     this.getChatHubs();
+
+    this.socket.on('message:typing:start:server', (data) => {
+      // visually show typing...
+      let hubId = data.userId;
+      this.activeUser.hubList.forEach(hub => {
+        if(hub.id === hubId){
+          hub.isTypingMessage = true;
+        }
+      })
+    })
+
+    this.socket.on('message:typing:stop:server', (data) => {
+      // visually show typing...
+      let hubId = data.userId;
+      this.activeUser.hubList.forEach(hub => {
+        if(hub.id === hubId){
+          hub.isTypingMessage = false;
+        }
+      })
+    })
   }
 
   getChatHubs() {
@@ -94,9 +114,5 @@ export class MessageListComponent implements OnInit {
     $(event.currentTarget).addClass('list-item-active');
 
     this.chatHubChanged.emit(hub);
-
-    // TODO: set unreadMessageCount to 0
-    // TODO: to be implemented properly
-    hub.unreadMessageCount = 0;
   }
 }

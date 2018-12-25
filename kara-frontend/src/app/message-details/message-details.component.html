@@ -14,7 +14,7 @@
     <div class="action-root">
       <form [formGroup]="msgFormGroup" (ngSubmit)="sendMessage()">
         <div class="form-group">
-          <input type="text" placeholder="type here..." class="form-control text-field" formControlName="msgField">
+          <input type="text" placeholder="type here..." class="form-control text-field" formControlName="msgField" (keydown)="messageTypingStart()" (keyup)="messageTypingStop()">
           <button type="submit" class="btn">></button>
         </div>
       </form>

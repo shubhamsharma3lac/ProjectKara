@@ -50,6 +50,14 @@ io.sockets.on('connection', function (client) {
             })
         })
     })
+
+    client.on('message:typing:start:client', function(data){
+        io.to(data.socketId).emit('message:typing:start:server', data);
+    })
+
+    client.on('message:typing:stop:client', function(data){
+        io.to(data.socketId).emit('message:typing:stop:server', data);
+    })
 });
 
 async function getUsersAsync(id) {

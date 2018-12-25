@@ -23,6 +23,7 @@
     background-color: lightgray;
     background-image: url(../../assets/207504_v9_bb.jpg);
     background-size: cover;
+    flex: none;
 }
 
 .list-item-info{
@@ -67,7 +68,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
 }
 
 .message-date{

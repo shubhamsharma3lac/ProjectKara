@@ -30,6 +30,26 @@ export class MessageDetailsComponent implements OnInit {
     })
   }
 
+  messageTypingStart($event: any) {
+    //TODO: emit typping event
+    let userId = this.activeUser.id;
+    let socketId = this.activeChatHub.socketId;
+
+    setTimeout(() => {
+      this.socket.emit('message:typing:start:client', { socketId: socketId, userId: userId });
+    }, 1000);
+  }
+
+  messageTypingStop($event: any) {
+    //TODO: emit typping event
+    let userId = this.activeUser.id;
+    let socketId = this.activeChatHub.socketId;
+
+    setTimeout(() => {
+      this.socket.emit('message:typing:stop:client', { socketId: socketId, userId: userId});
+    }, 4000);
+  }
+
   sendMessage() {
     let content = this.msgFormGroup.value['msgField'];
 
@@ -44,6 +64,7 @@ export class MessageDetailsComponent implements OnInit {
     this.updateHubsWithMessages(this.activeChatHub, message);
   }
 
+  // Link messages to their respective hubs
   updateHubsWithMessages(hub: ChatHub, message: Message) {
     const userId = this.activeUser.id;
     const hubId = hub.id;
