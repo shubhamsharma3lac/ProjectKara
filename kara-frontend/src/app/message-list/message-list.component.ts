@@ -28,6 +28,8 @@ export class MessageListComponent implements OnInit {
     this.socket.on('fetch:users:server', (data) => {
       this.activeUser.hubList = data.users;
 
+      this.listenToUserUpdates();
+
       // Get all the messages
       this.socket.emit('fetch:messages:client', { id: this.activeUser._id });
     })
@@ -60,9 +62,26 @@ export class MessageListComponent implements OnInit {
       message.isSent = false;
       hub.messages.push(message);
     }
-    else if (message.fromUserId === this.activeUser._id) {
+    else if (message.fromUserId === this.activeUser._id && message.toUserId == hub._id) {
       message.isSent = true;
       hub.messages.push(message);
     }
+  }
+
+  listenToUserUpdates() {
+    this.socket.on('update:user:socketId:server', (data) => {
+      let userId = data.id;
+      let socketId = data.socketId;
+
+      if (!this.activeUser.hubList) {
+        this.activeUser.hubList = [];
+      }
+
+      this.activeUser.hubList.forEach(hub => {
+        if (hub._id === userId) {
+          hub.socketId = socketId;
+        }
+      });
+    })
   }
 }

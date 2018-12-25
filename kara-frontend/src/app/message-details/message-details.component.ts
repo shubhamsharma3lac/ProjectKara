@@ -53,7 +53,7 @@ export class MessageDetailsComponent implements OnInit {
       message.isSent = false;
       hub.messages.push(message);
     }
-    else if (message.fromUserId === this.activeUser._id) {
+    else if (message.fromUserId === this.activeUser._id && message.toUserId == hub._id) {
       message.isSent = true;
       hub.messages.push(message);
     }

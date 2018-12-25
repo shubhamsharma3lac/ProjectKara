@@ -40,21 +40,6 @@ export class HomePageComponent implements OnInit {
     this.socket.on('disconnect', () => {
       console.log(this.socket.id);
     })
-
-    this.socket.on('update:user:socketId:server', (data) => {
-      let userId = data.id;
-      let socketId = data.socketId;
-
-      if(!this.activeUser.hubList){
-        this.activeUser.hubList = [];
-      }
-
-      this.activeUser.hubList.forEach(hub => {
-        if(hub._id === userId){
-          hub.socketId = socketId;
-        }
-      });
-    })
   }
 
   chatHubChanged(hub: any){

@@ -27,13 +27,6 @@
     flex: none;
 }
 
-.messages-root{
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    overflow: auto;
-}
-
 .action-root{
     display: flex;
     flex-direction: row;
@@ -71,8 +64,15 @@ form{
     background-size: cover;
 }
 
+.messages-root{
+    flex: 1;
+    overflow: auto;
+    margin-top: 1rem;
+}
+
 .messages-list{
     list-style: none;
+    list-style-type: none;
     padding: 16px;
     display: flex;
     flex-direction: column;
