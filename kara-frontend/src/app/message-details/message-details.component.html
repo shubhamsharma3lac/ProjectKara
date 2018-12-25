@@ -8,11 +8,7 @@
     </header>
     <div class="messages-root">
       <ul class="messages-list">
-        <li class="message-list-item" *ngFor="let message of activeChatHub.messages; index as i" [ngStyle]="{'align-self': message.isSent ? 'flex-start' : 'flex-end'}">
-          <div class="message-list-item-content">
-            <span>{{message.content}}</span>
-          </div>
-        </li>
+        <app-message-item [message]="message" *ngFor="let message of activeChatHub.messages; index as i" [ngStyle]="{'align-self': message.isSent ? 'flex-start' : 'flex-end'}"></app-message-item>
       </ul>
     </div>
     <div class="action-root">

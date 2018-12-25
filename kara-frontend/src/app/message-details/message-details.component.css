@@ -86,11 +86,3 @@ form{
     align-items: center;
     justify-content: center;
 }
-
-.message-list-item-content{
-    padding: 8px;
-    margin-bottom: 8px;
-    color: black;
-    background: wheat;
-    border-radius: 10px;
-}

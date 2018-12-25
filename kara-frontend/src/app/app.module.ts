@@ -13,6 +13,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import * as $ from 'jquery';
 import { MessageListComponent } from './message-list/message-list.component';
 import { MessageDetailsComponent } from './message-details/message-details.component';
+import { MessageItemComponent } from './message-item/message-item.component';
 
 const routes: Route[] = 
 [
@@ -37,7 +38,8 @@ const routes: Route[] =
     SignupPageComponent,
     LoginPageComponent,
     MessageListComponent,
-    MessageDetailsComponent
+    MessageDetailsComponent,
+    MessageItemComponent
   ],
   imports: [
     BrowserModule,
