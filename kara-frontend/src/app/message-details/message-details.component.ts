@@ -26,8 +26,8 @@ export class MessageDetailsComponent implements OnInit {
     this.listenToServerEvents();
   }
 
-  listenToServerEvents(){
-    this.socket.on("send:message:server", data => {
+  listenToServerEvents() {
+    this.socket.on("send:message::server", data => {
       this.activeUser.hubList.forEach(hub => {
         this.updateHubsWithMessages(hub, Message.from(data.message));
       });
@@ -35,25 +35,23 @@ export class MessageDetailsComponent implements OnInit {
   }
 
   messageTypingStart($event: any) {
-    //TODO: emit typping event
     let userId = this.activeUser.id;
     let socketId = this.activeChatHub.socketId;
 
     setTimeout(() => {
-      this.socket.emit("message:typing:start:client", {
+      this.socket.emit("message:typing:start::client", {
         socketId: socketId,
         userId: userId
       });
-    }, 1000);
+    }, 500);
   }
 
   messageTypingStop($event: any) {
-    //TODO: emit typping event
     let userId = this.activeUser.id;
     let socketId = this.activeChatHub.socketId;
 
     setTimeout(() => {
-      this.socket.emit("message:typing:stop:client", {
+      this.socket.emit("message:typing:stop::client", {
         socketId: socketId,
         userId: userId
       });
