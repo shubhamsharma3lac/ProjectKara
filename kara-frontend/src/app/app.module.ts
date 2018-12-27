@@ -14,6 +14,8 @@ import * as $ from 'jquery';
 import { MessageListComponent } from './message-list/message-list.component';
 import { MessageDetailsComponent } from './message-details/message-details.component';
 import { MessageItemComponent } from './message-item/message-item.component';
+import { ChatHubListItemComponent } from './chat-hub-list-item/chat-hub-list-item.component';
+import { ChatHubListComponent } from './chat-hub-list/chat-hub-list.component';
 
 const routes: Route[] = 
 [
@@ -39,7 +41,9 @@ const routes: Route[] =
     LoginPageComponent,
     MessageListComponent,
     MessageDetailsComponent,
-    MessageItemComponent
+    MessageItemComponent,
+    ChatHubListItemComponent,
+    ChatHubListComponent
   ],
   imports: [
     BrowserModule,

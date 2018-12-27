@@ -10,18 +10,18 @@ io.sockets.on("connection", function(client) {
     client.broadcast.emit("message:server", { message: data.message });
   });
 
-  client.on("fetch:users::client", async function(data) {
+  client.on("fetch:users::client", function(data) {
     let userId = data.userId;
-    let users = User.find({ _id: { $ne: userId } }, function(err, result) {
+    User.find({ _id: { $ne: userId } }, function(err, result) {
       if (err) {
         return console.log(err);
       }
 
-      client.emit("fetch:users::server", { users: users });
+      client.emit("fetch:users::server", { users: result });
     });
   });
 
-  client.on("send:message::client", data => {
+  client.on("send:message::client", function(data) {
     //TODO: save message to database
     var message = new Message();
     Object.keys(data.message).forEach(key => {

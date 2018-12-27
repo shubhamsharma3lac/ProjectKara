@@ -1,0 +1,13 @@
+<div class="container-fluid">
+  <header class="header">
+    <div class="header-content">
+      <div class="avatar avatar-small"></div>
+      <small> {{activeUser.firstName}}</small>
+    </div>
+  </header>
+  <div class="chats-container">
+    <ul class="list-messages">
+      <app-chat-hub-list-item class="list-item-container" [hub]="hub" *ngFor="let hub of activeUser.hubList; index as i" (click)="onChatHubChanged($event, hub)"></app-chat-hub-list-item>
+    </ul>
+  </div>
+</div>

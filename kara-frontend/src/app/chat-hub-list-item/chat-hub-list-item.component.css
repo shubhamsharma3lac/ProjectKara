@@ -1,0 +1,75 @@
+.list-item{
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.list-item-avatar{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: lightgray;
+    background-image: url(../../assets/207504_v9_bb.jpg);
+    background-size: cover;
+    flex: none;
+}
+
+.list-item-info{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: stretch;
+    margin-left: 1rem;
+    overflow: hidden;
+}
+
+.list-item-info-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.hub-display-name{
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.hub-messages-count-badge{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    background: wheat;
+    border-radius: 50%;
+    font-size: 65%;
+    width: 16px;
+    height: 16px;
+}
+
+.list-item-info-message{
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+    min-width: 0;
+}
+
+.message-text{
+    display: block;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 4px;
+}
+
+.message-date{
+    display: block;
+    flex: none;
+}

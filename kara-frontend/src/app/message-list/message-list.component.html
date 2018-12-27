@@ -1,28 +1,3 @@
-<div class="container-fluid">
-  <header class="header">
-    <div class="header-content">
-      <div class="avatar avatar-small"></div>
-      <small> {{activeUser.firstName}}</small>
-    </div>
-  </header>
-  <div class="chats-container">
-    <ul class="list-messages">
-      <li class="list-item-container" *ngFor="let hub of activeUser.hubList; index as i" (click)="onChatHubChanged($event, hub)">
-        <div class="list-item">
-          <div class="list-item-avatar"></div>
-          <div class="list-item-info">
-            <div class="list-item-info-header">
-              <strong class="message-user-name">{{hub.name}}</strong>
-              <span class="message-badge" *ngIf="hub.unreadMessageCount !== 0">{{hub.unreadMessageCount}}</span>
-            </div>
-            <div class="list-item-info-message">
-              <small *ngIf="!hub.isTypingMessage" class="message-text">{{hub.messages[hub.messages.length - 1]?.content}}</small>
-              <small *ngIf="!hub.isTypingMessage" class="message-date">{{hub.messages[hub.messages.length - 1]?.dateRecieved | date: 'shortTime'}}</small>
-              <small *ngIf="hub.isTypingMessage" class="message-text" style="color: green">typing...</small>
-            </div>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-</div>
+<p>
+  message-list works!
+</p>
