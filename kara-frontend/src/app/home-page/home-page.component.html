@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row h-100">
     <app-chat-hub-list [socket]="socket" [activeUser]="activeUser" (chatHubChanged)="chatHubChanged($event)" class="col-md-4 h-100 px-0"></app-chat-hub-list>
-    <app-message-details [socket]="socket" [activeUser]="activeUser" [activeChatHub]="activeChatHub" class="col-md-8 h-100 px-0"></app-message-details>
+    <app-chat-hub-list-item-details [socket]="socket" [activeUser]="activeUser" [activeChatHub]="activeChatHub" class="col-md-8 h-100 px-0"></app-chat-hub-list-item-details>
   </div>
 </div>

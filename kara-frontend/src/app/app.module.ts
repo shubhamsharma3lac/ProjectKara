@@ -16,6 +16,7 @@ import { MessageDetailsComponent } from './message-details/message-details.compo
 import { MessageItemComponent } from './message-item/message-item.component';
 import { ChatHubListItemComponent } from './chat-hub-list-item/chat-hub-list-item.component';
 import { ChatHubListComponent } from './chat-hub-list/chat-hub-list.component';
+import { ChatHubListItemDetailsComponent } from './chat-hub-list-item-details/chat-hub-list-item-details.component';
 
 const routes: Route[] = 
 [
@@ -43,7 +44,8 @@ const routes: Route[] =
     MessageDetailsComponent,
     MessageItemComponent,
     ChatHubListItemComponent,
-    ChatHubListComponent
+    ChatHubListComponent,
+    ChatHubListItemDetailsComponent
   ],
   imports: [
     BrowserModule,
