@@ -6,9 +6,9 @@
         <span class="hub-messages-count-badge" *ngIf="hub.unreadMessageCount !== 0">{{hub.unreadMessageCount}}</span>
       </div>
       <div class="list-item-info-message">
-        <small *ngIf="!hub.isTypingMessage" class="message-text">{{hub.messages[hub.messages.length - 1]?.content}}</small>
-        <small *ngIf="!hub.isTypingMessage" class="message-date">{{hub.messages[hub.messages.length - 1]?.dateRecieved | date: 'shortTime'}}</small>
-        <small *ngIf="hub.isTypingMessage" class="message-text" style="color: green">typing...</small>
+        <span *ngIf="!hub.isTypingMessage" class="message-text">{{hub.messages[hub.messages.length - 1]?.content}}</span>
+        <span *ngIf="!hub.isTypingMessage" class="message-date">{{hub.messages[hub.messages.length - 1]?.dateRecieved | date: 'shortTime'}}</span>
+        <span *ngIf="hub.isTypingMessage" class="message-text" style="color: green">typing...</span>
       </div>
     </div>
   </div>

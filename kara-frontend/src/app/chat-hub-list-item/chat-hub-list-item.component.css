@@ -39,6 +39,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
+    font-weight: 600;
 }
 
 .hub-messages-count-badge{
@@ -67,9 +68,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     margin-right: 4px;
+    font-size: 70%;
 }
 
 .message-date{
     display: block;
     flex: none;
+    font-size: 65%;
 }
