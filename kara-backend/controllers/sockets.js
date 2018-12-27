@@ -10,13 +10,13 @@ io.sockets.on('connection', function (client) {
         client.broadcast.emit('message:server', { message: data.message });
     })
 
-    client.on('fetch:users:client', async function (data) {
-        var userId = data.id;
-        var users = await getUsersAsync(userId);
-        client.emit('fetch:users:server', { users: users })
+    client.on('fetch:users::client', async function (data) {
+        let userId = data.userId;
+        let users = await getUsersAsync(userId);
+        client.emit('fetch:users::server', { users: users })
     })
 
-    client.on('send:message:client', (data) => {
+    client.on('send:message::client', (data) => {
         //TODO: save message to database
         var message = new Message();
         Object.keys(data.message).forEach((key) => {
@@ -28,25 +28,30 @@ io.sockets.on('connection', function (client) {
                 return console.log(err);
             }
 
-            io.to(data.socketId).emit('send:message:server', { message: data.message });
+            io.to(data.socketId).emit('send:message::server', { message: data.message });
         })
     })
 
-    client.on('fetch:messages:client', async function (data) {
-        var messages = await Message.find({ $or: [{ fromUserId: data.id }, { toUserId: data.id }] }).exec();
-        client.emit('fetch:messages:server', { messages: messages });
+    client.on('fetch:messages::client', async function (data) {
+        var messages = await Message.find({ $or: [{ fromUserId: data.userId }, { toUserId: data.userId }] }).exec();
+        client.emit('fetch:messages::server', { messages: messages });
     })
 
-    client.on('update:user:socketId:client', function (data) {
-        var userId = data.userId;
+    client.on('update:user:socketId::client', function (data) {
+        let userId = data.userId;
+        let socketId = data.socketId;
         User.findById(userId, function (err, user) {
-            user.socketId = client.id;
-            user.save(function (err, modified_user) {
+            if(err){
+                return console.log(err);
+            }
+
+            user.socketId = socketId;
+            user.save(function (err, user) {
                 if (err) {
-                    console.log(err);
+                    return console.log(err);
                 }
 
-                client.broadcast.emit('update:user:socketId:server', { id: modified_user._id,  socketId: modified_user.socketId });
+                client.broadcast.emit('update:user:socketId::server', { userId: user._id,  socketId: user.socketId });
             })
         })
     })

@@ -27,10 +27,8 @@ export class HomePageComponent implements OnInit {
 
     this.socket = io('http://localhost:3000/');
     this.socket.on('connect', () => {
-      //TODO: update user with socket id
       this.activeUser.socketId = this.socket.id;
-      this.socket.emit('update:user:socketId:client', { userId: userId });
-      console.log(this.socket.id);
+      this.socket.emit('update:user:socketId:client', { userId: userId, socketId: this.socket.id });
     });
 
     this.socket.on('reconnect', () => {

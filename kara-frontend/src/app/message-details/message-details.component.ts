@@ -1,13 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Message } from '../models/message';
-import { ChatHub } from '../models/chat-hub';
-import { User } from '../models/user';
+import { Component, OnInit, Input } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
+import { Message } from "../models/message";
+import { ChatHub } from "../models/chat-hub";
+import { User } from "../models/user";
 
 @Component({
-  selector: 'app-message-details',
-  templateUrl: './message-details.component.html',
-  styleUrls: ['./message-details.component.css']
+  selector: "app-message-details",
+  templateUrl: "./message-details.component.html",
+  styleUrls: ["./message-details.component.css"]
 })
 export class MessageDetailsComponent implements OnInit {
   @Input() socket: SocketIOClient.Socket;
@@ -18,16 +18,20 @@ export class MessageDetailsComponent implements OnInit {
 
   constructor() {
     let formControls = {};
-    formControls['msgField'] = new FormControl('');
+    formControls["msgField"] = new FormControl("");
     this.msgFormGroup = new FormGroup(formControls);
   }
 
   ngOnInit() {
-    this.socket.on('send:message:server', (data) => {
+    this.listenToServerEvents();
+  }
+
+  listenToServerEvents(){
+    this.socket.on("send:message:server", data => {
       this.activeUser.hubList.forEach(hub => {
         this.updateHubsWithMessages(hub, Message.from(data.message));
       });
-    })
+    });
   }
 
   messageTypingStart($event: any) {
@@ -36,7 +40,10 @@ export class MessageDetailsComponent implements OnInit {
     let socketId = this.activeChatHub.socketId;
 
     setTimeout(() => {
-      this.socket.emit('message:typing:start:client', { socketId: socketId, userId: userId });
+      this.socket.emit("message:typing:start:client", {
+        socketId: socketId,
+        userId: userId
+      });
     }, 1000);
   }
 
@@ -46,12 +53,15 @@ export class MessageDetailsComponent implements OnInit {
     let socketId = this.activeChatHub.socketId;
 
     setTimeout(() => {
-      this.socket.emit('message:typing:stop:client', { socketId: socketId, userId: userId});
+      this.socket.emit("message:typing:stop:client", {
+        socketId: socketId,
+        userId: userId
+      });
     }, 4000);
   }
 
   sendMessage() {
-    let content = this.msgFormGroup.value['msgField'];
+    let content = this.msgFormGroup.value["msgField"];
 
     let message = new Message();
     message.fromUserId = this.activeUser.id;
@@ -59,7 +69,10 @@ export class MessageDetailsComponent implements OnInit {
     message.content = content;
     message.dateSent = new Date();
 
-    this.socket.emit('send:message:client', { message: message, socketId: this.activeChatHub.socketId });
+    this.socket.emit("send:message:client", {
+      message: message,
+      socketId: this.activeChatHub.socketId
+    });
 
     this.updateHubsWithMessages(this.activeChatHub, message);
   }
@@ -78,8 +91,7 @@ export class MessageDetailsComponent implements OnInit {
       if (!message.dateReaded) {
         hub.unreadMessageCount++;
       }
-    }
-    else if (message.fromUserId === userId && message.toUserId == hubId) {
+    } else if (message.fromUserId === userId && message.toUserId == hubId) {
       hub.messages.push(message);
     }
   }
