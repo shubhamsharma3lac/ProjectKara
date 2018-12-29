@@ -16,5 +16,4 @@ export class ChatHubListItemDetailsMessageListComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

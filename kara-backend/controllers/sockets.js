@@ -85,4 +85,21 @@ io.sockets.on("connection", function(client) {
       socketId: socketId
     });
   });
+
+  client.on("message:readed::client", function(data) {
+    let message = new Message();
+
+    Object.keys(data.message).forEach(key => {
+      message[key] = data.message[key];
+    });
+
+    Message.findOneAndUpdate({ _id: message.id }, message, function(
+      err,
+      result
+    ) {
+      if (err) {
+        return console.log(err);
+      }
+    });
+  });
 });
