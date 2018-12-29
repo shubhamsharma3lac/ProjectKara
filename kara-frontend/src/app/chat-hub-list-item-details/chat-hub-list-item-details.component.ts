@@ -35,10 +35,8 @@ export class ChatHubListItemDetailsComponent implements OnInit {
     const hubId = hub.id;
 
     if (message.toUserId === userId && message.fromUserId === hubId) {
-      //TODO: Add daterecieved to message
-      message.dateRecieved = new Date();
-      //TODO: update dateRecieved in database
       hub.messages.push(message);
+      this.socket.emit('ack:message:recieved::client', { message: message, socketId: this.activeUser.socketId })
 
       if (!message.dateReaded) {
         hub.unreadMessageCount++;

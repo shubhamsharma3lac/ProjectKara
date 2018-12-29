@@ -16,8 +16,29 @@
 
 .message-extra-info{
     display: flex;
+    flex-direction: row;
     margin-top: 4px;
     font-size: 70%;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: stretch;
 }
 
+.msg-sck{
+    flex: none;
+}
+
+.text-muted{
+    flex: 1;
+    align-self: flex-end;
+    margin-left: 1rem;
+}
+
+svg{
+    width: 16px !important;
+    height: 16px !important;
+}
+
+svg path{
+    stroke: hotpink;
+    fill: hotpink;
+}

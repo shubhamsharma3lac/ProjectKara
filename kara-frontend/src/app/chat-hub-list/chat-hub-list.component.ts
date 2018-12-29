@@ -46,7 +46,7 @@ export class ChatHubListComponent implements OnInit {
     this.socket.on("fetch:messages::server", data => {
       this.activeUser.hubList.forEach(hub => {
         data.messages.forEach(messsage => {
-          this.updateHubsWithMessages(hub, messsage);
+          this.updateHubsWithMessages(hub, Message.from(messsage));
         });
       });
     });
@@ -99,7 +99,7 @@ export class ChatHubListComponent implements OnInit {
     if (message.toUserId === userId && message.fromUserId === hubId) {
       //TODO: Add daterecieved to message
       if (!message.dateRecieved) {
-        message.dateRecieved = new Date();
+        this.socket.emit('ack:message:recieved::client', { message: message, socketId: this.activeUser.socketId })
       }
 
       if (!message.dateReaded) {
@@ -115,7 +115,7 @@ export class ChatHubListComponent implements OnInit {
   onChatHubChanged($event: any, hub: ChatHub) {
     $(".list-messages")
       .children()
-      .each(function() {
+      .each(function () {
         $(this).removeClass("list-item-active");
       });
 

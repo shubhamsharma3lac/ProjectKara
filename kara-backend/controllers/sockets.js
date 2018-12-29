@@ -34,7 +34,7 @@ io.sockets.on("connection", function(client) {
       }
 
       io.to(data.socketId).emit("send:message::server", {
-        message: data.message
+        message: result
       });
     });
   });
@@ -86,20 +86,35 @@ io.sockets.on("connection", function(client) {
     });
   });
 
-  client.on("message:readed::client", function(data) {
+  client.on("ack:message:readed::client", function(data) {
     let message = new Message();
 
     Object.keys(data.message).forEach(key => {
       message[key] = data.message[key];
     });
 
-    Message.updateOne({ _id: message.id }, message, function(
-      err,
-      result
-    ) {
+    Message.updateOne({ _id: message.id }, message, function(err, result) {
       if (err) {
         return console.log(err);
       }
+    });
+  });
+
+  client.on("ack:message:recieved::client", function(data) {
+    let socketId = data.socketId;
+    let message = new Message();
+
+    Object.keys(data.message).forEach(key => {
+      message[key] = data.message[key];
+    });
+
+    message.dateRecieved = new Date();
+    Message.updateOne({ _id: message.id }, message, function(err, result) {
+      if (err) {
+        return console.log(err);
+      }
+
+      io.to(socketId).emit("ack:message:recieved::server", { _id: message.id, dateRecieved: message.dateRecieved })
     });
   });
 });

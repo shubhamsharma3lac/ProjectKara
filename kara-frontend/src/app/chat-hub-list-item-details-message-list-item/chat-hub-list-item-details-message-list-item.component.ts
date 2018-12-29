@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ElementRef } from "@angular/core";
 import { Message } from '../models/message';
 import { ChatHub } from '../models/chat-hub';
+import { User } from '../models/user';
 
 @Component({
   selector: "app-chat-hub-list-item-details-message-list-item",
@@ -10,6 +11,7 @@ import { ChatHub } from '../models/chat-hub';
 export class ChatHubListItemDetailsMessageListItemComponent implements OnInit {
   @Input() socket: SocketIOClient.Socket;
   @Input() message: Message;
+  @Input() activeUser: User;
   @Input() activeChatHub: ChatHub;
 
   constructor(private element: ElementRef) { }
@@ -31,7 +33,7 @@ export class ChatHubListItemDetailsMessageListItemComponent implements OnInit {
             this.message.dateReaded = new Date();
             this.activeChatHub.unreadMessageCount--;
 
-            this.socket.emit('message:readed::client', { message: this.message });
+            this.socket.emit('ack:message:readed::client', { message: this.message });
           }
         }
       })

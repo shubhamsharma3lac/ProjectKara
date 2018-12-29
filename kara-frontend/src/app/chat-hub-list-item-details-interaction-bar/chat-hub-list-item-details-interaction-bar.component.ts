@@ -23,7 +23,7 @@ export class ChatHubListItemDetailsInteractionBarComponent implements OnInit {
     this.formGroup = new FormGroup({ messageField: messageControl });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   messageTypingStart($event: any) {
     let userId = this.activeUser.id;
@@ -51,6 +51,9 @@ export class ChatHubListItemDetailsInteractionBarComponent implements OnInit {
 
   sendMessage() {
     let content = this.formGroup.value["messageField"];
+    if (content === '') {
+      return;
+    }
 
     let message = new Message();
     message.fromUserId = this.activeUser.id;
@@ -71,18 +74,6 @@ export class ChatHubListItemDetailsInteractionBarComponent implements OnInit {
   updateHubsWithMessages(hub: ChatHub, message: Message) {
     const userId = this.activeUser.id;
     const hubId = hub.id;
-
-    if (message.toUserId === userId && message.fromUserId === hubId) {
-      //TODO: Add daterecieved to message
-      message.dateRecieved = new Date();
-      //TODO: update dateRecieved in database
-      hub.messages.push(message);
-
-      if (!message.dateReaded) {
-        hub.unreadMessageCount++;
-      }
-    } else if (message.fromUserId === userId && message.toUserId == hubId) {
-      hub.messages.push(message);
-    }
+    hub.messages.push(message);
   }
 }
