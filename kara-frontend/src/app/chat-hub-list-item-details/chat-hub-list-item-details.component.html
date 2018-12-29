@@ -11,14 +11,7 @@
         <app-message-item [message]="message" *ngFor="let message of activeChatHub.messages; index as i" [ngStyle]="{'align-self': message.fromUserId === activeUser.id ? 'flex-start' : 'flex-end'}"></app-message-item>
       </ul>
     </div>
-    <div class="action-root">
-      <form [formGroup]="msgFormGroup" (ngSubmit)="sendMessage()">
-        <div class="form-group">
-          <input type="text" placeholder="type here..." class="form-control text-field" formControlName="msgField" (keydown)="messageTypingStart()" (keyup)="messageTypingStop()">
-          <button type="submit" class="btn">></button>
-        </div>
-      </form>
-    </div>
+    <app-chat-hub-list-item-details-interaction-bar [socket]="socket" [activeUser]="activeUser" [activeChatHub]="activeChatHub" class="chat-bar"></app-chat-hub-list-item-details-interaction-bar>
   </div>
   <div class="no-content-root"  *ngIf="!activeChatHub">
     <p>Start chatting...</p>

@@ -17,6 +17,10 @@ import { MessageItemComponent } from './message-item/message-item.component';
 import { ChatHubListItemComponent } from './chat-hub-list-item/chat-hub-list-item.component';
 import { ChatHubListComponent } from './chat-hub-list/chat-hub-list.component';
 import { ChatHubListItemDetailsComponent } from './chat-hub-list-item-details/chat-hub-list-item-details.component';
+import { ChatHubListItemDetailsMessageListComponent } from './chat-hub-list-item-details-message-list/chat-hub-list-item-details-message-list.component';
+import { ChatHubListItemDetailsMessageListItemComponent } from './chat-hub-list-item-details-message-list-item/chat-hub-list-item-details-message-list-item.component';
+import { ChatHubListItemDetailsHeaderBarComponent } from './chat-hub-list-item-details-header-bar/chat-hub-list-item-details-header-bar.component';
+import { ChatHubListItemDetailsInteractionBarComponent } from './chat-hub-list-item-details-interaction-bar/chat-hub-list-item-details-interaction-bar.component';
 
 const routes: Route[] = 
 [
@@ -45,7 +49,11 @@ const routes: Route[] =
     MessageItemComponent,
     ChatHubListItemComponent,
     ChatHubListComponent,
-    ChatHubListItemDetailsComponent
+    ChatHubListItemDetailsComponent,
+    ChatHubListItemDetailsMessageListComponent,
+    ChatHubListItemDetailsMessageListItemComponent,
+    ChatHubListItemDetailsHeaderBarComponent,
+    ChatHubListItemDetailsInteractionBarComponent
   ],
   imports: [
     BrowserModule,

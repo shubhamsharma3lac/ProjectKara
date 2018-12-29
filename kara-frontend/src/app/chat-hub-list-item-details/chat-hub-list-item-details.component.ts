@@ -14,12 +14,7 @@ export class ChatHubListItemDetailsComponent implements OnInit {
   @Input() activeUser: User;
   @Input() activeChatHub: ChatHub;
 
-  public msgFormGroup: FormGroup;
-
   constructor() {
-    let formControls = {};
-    formControls["msgField"] = new FormControl("");
-    this.msgFormGroup = new FormGroup(formControls);
   }
 
   ngOnInit() {
@@ -32,47 +27,6 @@ export class ChatHubListItemDetailsComponent implements OnInit {
         this.updateHubsWithMessages(hub, Message.from(data.message));
       });
     });
-  }
-
-  messageTypingStart($event: any) {
-    let userId = this.activeUser.id;
-    let socketId = this.activeChatHub.socketId;
-
-    setTimeout(() => {
-      this.socket.emit("message:typing:start::client", {
-        socketId: socketId,
-        userId: userId
-      });
-    }, 500);
-  }
-
-  messageTypingStop($event: any) {
-    let userId = this.activeUser.id;
-    let socketId = this.activeChatHub.socketId;
-
-    setTimeout(() => {
-      this.socket.emit("message:typing:stop::client", {
-        socketId: socketId,
-        userId: userId
-      });
-    }, 4000);
-  }
-
-  sendMessage() {
-    let content = this.msgFormGroup.value["msgField"];
-
-    let message = new Message();
-    message.fromUserId = this.activeUser.id;
-    message.toUserId = this.activeChatHub.id;
-    message.content = content;
-    message.dateSent = new Date();
-
-    this.socket.emit("send:message:client", {
-      message: message,
-      socketId: this.activeChatHub.socketId
-    });
-
-    this.updateHubsWithMessages(this.activeChatHub, message);
   }
 
   // Link messages to their respective hubs
