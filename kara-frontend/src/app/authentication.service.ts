@@ -1,23 +1,30 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { map, catchError } from "rxjs/operators";
+import { User } from "./models/user";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthenticationService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  registerUserAsync(data: {}): Promise<any>{
-    let options = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    return this.http.post('http://localhost:3000/user/register', data, options).toPromise();
+  registerAsync(formData: any): Observable<any> {
+    return this.http.post("http://localhost:3000/user/register", formData).pipe(
+      catchError(err => {
+        console.log("Get failed", err);
+        throw new Error("");
+      })
+    );
   }
 
-  loginUserAsync(data: {}): Promise<any>{
-    return this.http.post('http://localhost:3000/user/auth/token', data).toPromise();
+  loginAsync(formData: any): Observable<User> {
+    return this.http
+      .post<User>("http://localhost:3000/user/auth/token", formData)
+      .pipe(
+        catchError(err => {
+          console.log("Post failed", err);
+          throw new Error("Login failed");
+        })
+      );
   }
 }

@@ -5,12 +5,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const config = require('./models/config');
-const mongoose = require('mongoose');
 const userRouter = require('./routes/users');
 
 var app = express();
-
-mongoose.connect("mongodb+srv://shubhams:echoecho_12@cluster0-p6esy.mongodb.net/kara?retryWrites=true/", { useNewUrlParser: true });
 
 if (app.get('env') === 'development') { var dev = true; }
 
@@ -42,4 +39,5 @@ app.use(function(err, req, res, next){
 var server = app.listen(config.port, () => console.log(`server listening on ${config.port}`));
 module.exports = server;
 
+require('./scripts/mongoose');
 require('./controllers/sockets');

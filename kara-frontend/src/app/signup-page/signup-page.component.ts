@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup-page',
@@ -12,7 +13,7 @@ export class SignupPageComponent implements OnInit {
   public registerationFormGroup: FormGroup;
   public registerationFormControls = {};
 
-  constructor(private authService: AuthenticationService) {
+  constructor(private router: Router, private authService: AuthenticationService) {
     let validators = [];
     this.registerationFormControls['firstName'] = new FormControl('', Validators.required);
     this.registerationFormControls['lastName'] = new FormControl('', Validators.required);
@@ -42,11 +43,11 @@ export class SignupPageComponent implements OnInit {
       data[key] = this.registerationFormGroup.value[key];
     })
 
-    this.authService.registerUserAsync(data).then(function(res){
-      var x = res;
-    }, function(err){
-
-    })
+    this.authService.registerAsync(data).subscribe(result => {
+      if(result){
+        this.router.navigate(['login']);
+      }
+    });
   }
 
 }
