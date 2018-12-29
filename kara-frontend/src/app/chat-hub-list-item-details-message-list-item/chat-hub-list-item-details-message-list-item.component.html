@@ -1,3 +1,10 @@
-<p>
-  chat-hub-list-item-details-message-list-item works!
-</p>
+<li class="message-list-item">
+  <div class="message-root">
+    <div class="message-main-body">
+      <span>{{ message.content }}</span>
+    </div>
+    <div class="message-extra-info">
+      <small class="text-muted">{{ message.dateRecieved | date: "shortTime"}}</small>
+    </div>
+  </div>
+</li>

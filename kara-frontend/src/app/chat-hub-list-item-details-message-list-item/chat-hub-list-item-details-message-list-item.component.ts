@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-chat-hub-list-item-details-message-list-item',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat-hub-list-item-details-message-list-item.component.css']
 })
 export class ChatHubListItemDetailsMessageListItemComponent implements OnInit {
+  @Input() message;
 
   constructor() { }
 

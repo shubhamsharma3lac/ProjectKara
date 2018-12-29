@@ -1,0 +1,23 @@
+.message-root{
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    margin-bottom: 8px;
+    color: black;
+    background: wheat;
+    border-radius: 10px;
+}
+
+.message-main-body{
+    flex: 1;
+    font: inherit;
+    font-size: 100%;
+}
+
+.message-extra-info{
+    display: flex;
+    margin-top: 4px;
+    font-size: 70%;
+    justify-content: flex-end;
+}
+

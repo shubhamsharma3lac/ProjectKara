@@ -3,6 +3,8 @@ import { Message } from "../models/message";
 import { FormGroup, FormControl } from "@angular/forms";
 import { User } from "../models/user";
 import { ChatHub } from "../models/chat-hub";
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: "app-chat-hub-list-item-details-interaction-bar",
@@ -15,6 +17,7 @@ export class ChatHubListItemDetailsInteractionBarComponent implements OnInit {
   @Input() activeChatHub: ChatHub;
 
   public formGroup: FormGroup;
+
   constructor() {
     let messageControl = new FormControl("");
     this.formGroup = new FormGroup({ messageField: messageControl });
@@ -61,6 +64,8 @@ export class ChatHubListItemDetailsInteractionBarComponent implements OnInit {
     });
 
     this.updateHubsWithMessages(this.activeChatHub, message);
+
+    this.formGroup.reset();
   }
 
   updateHubsWithMessages(hub: ChatHub, message: Message) {

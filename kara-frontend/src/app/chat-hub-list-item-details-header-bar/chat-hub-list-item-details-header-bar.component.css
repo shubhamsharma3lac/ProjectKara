@@ -1,0 +1,23 @@
+.container-fluid{
+    height: 3rem;
+    padding: 0.5rem 1rem;
+    background: whitesmoke;
+    color: black;
+}
+
+.hub-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.avatar{
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+    background-color: antiquewhite;
+    background-image: url(../../assets/fotonoticia_20120217124725_644.jpg);
+    background-size: cover;
+}

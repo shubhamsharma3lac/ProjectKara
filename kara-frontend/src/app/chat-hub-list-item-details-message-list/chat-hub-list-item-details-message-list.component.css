@@ -1,0 +1,15 @@
+:host{
+    overflow: auto;
+}
+
+.container-fluid{
+    padding: 0;
+}
+
+.messages-list{
+    list-style: none;
+    list-style-type: none;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}

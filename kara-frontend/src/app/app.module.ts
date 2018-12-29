@@ -11,9 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginPageComponent } from './login-page/login-page.component';
 import * as $ from 'jquery';
-import { MessageListComponent } from './message-list/message-list.component';
-import { MessageDetailsComponent } from './message-details/message-details.component';
-import { MessageItemComponent } from './message-item/message-item.component';
 import { ChatHubListItemComponent } from './chat-hub-list-item/chat-hub-list-item.component';
 import { ChatHubListComponent } from './chat-hub-list/chat-hub-list.component';
 import { ChatHubListItemDetailsComponent } from './chat-hub-list-item-details/chat-hub-list-item-details.component';
@@ -44,9 +41,6 @@ const routes: Route[] =
     HomePageComponent,
     SignupPageComponent,
     LoginPageComponent,
-    MessageListComponent,
-    MessageDetailsComponent,
-    MessageItemComponent,
     ChatHubListItemComponent,
     ChatHubListComponent,
     ChatHubListItemDetailsComponent,

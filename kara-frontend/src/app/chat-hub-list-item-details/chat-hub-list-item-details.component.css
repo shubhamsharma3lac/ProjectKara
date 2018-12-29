@@ -10,58 +10,9 @@
     height: 100%;
 }
 
-.header-root{
-    display: flex;
-    flex-direction: row;
-    flex: none;
-    height: 48px;
-    padding: 0 16px;
-    align-items: center;
-    justify-content: flex-end;
-    background: whitesmoke;
-    color: black;
-}
-
-.header-content{
-    display: flex;
-    flex-direction: row;
-    flex: none;
-}
-
-.avatar{
-    width: 32px;
-    height: 32px;
-    margin-right: 8px;
-    border-radius: 50%;
-    background-color: antiquewhite;
-    background-image: url(../../assets/fotonoticia_20120217124725_644.jpg);
-    background-size: cover;
-}
-
-.messages-root{
-    flex: 1;
-    overflow: auto;
-}
-
-.messages-list{
-    list-style: none;
-    list-style-type: none;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
 .no-content-root{
     display: flex;
     height: 100%;
     align-items: center;
     justify-content: center;
-}
-
-.chat-bar{
-    display: block;
-    flex: none;
-    align-self: stretch;
-    justify-self: stretch;
 }
