@@ -93,7 +93,7 @@ io.sockets.on("connection", function(client) {
       message[key] = data.message[key];
     });
 
-    Message.findOneAndUpdate({ _id: message.id }, message, function(
+    Message.updateOne({ _id: message.id }, message, function(
       err,
       result
     ) {
