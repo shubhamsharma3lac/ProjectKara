@@ -13,6 +13,7 @@ export class User {
     constructor() {
     }
 
+    //
     static from(obj: any): User {
         if(!obj){
             return null;
